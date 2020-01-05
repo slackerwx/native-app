@@ -3,11 +3,13 @@ import styled from "styled-components/native";
 import Card from "./components/Card";
 import ContentCard from "./components/ContentCard";
 import { ScrollView, SafeAreaView } from "react-native";
+import Menu from "./components/Menu";
 
 export default class App extends React.Component {
   render() {
     return (
       <Container>
+        <Menu />
         <SafeAreaView>
           <ScrollView style={{ height: "100%" }}>
             <TitleBar>
