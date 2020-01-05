@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 import Card from "./components/Card";
+import ContentCard from "./components/ContentCard";
 import { ScrollView, SafeAreaView } from "react-native";
 
 export default class App extends React.Component {
@@ -18,36 +19,32 @@ export default class App extends React.Component {
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
+              style={{ paddingBottom: 30 }}
             >
-              <Card
-                image={require("./assets/card_background.jpg")}
-                title="Styled Components"
-                caption="React Native"
-                logo={require("./assets/logo-react.png")}
-                subtitle="Sections"
-              />
-              <Card
-                image={require("./assets/card_background.jpg")}
-                title="Styled Components"
-                caption="React Native"
-                logo={require("./assets/logo-react.png")}
-                subtitle="Sections"
-              />
-              <Card
-                image={require("./assets/card_background.jpg")}
-                title="Styled Components"
-                caption="React Native"
-                logo={require("./assets/logo-react.png")}
-                subtitle="Sections"
-              />
-              <Card
-                image={require("./assets/card_background.jpg")}
-                title="Styled Components"
-                caption="React Native"
-                logo={require("./assets/logo-react.png")}
-                subtitle="Sections"
-              />
+              {cards.map((card, index) => (
+                <Card
+                  key={index}
+                  image={card.image}
+                  title={card.title}
+                  caption={card.caption}
+                  logo={card.logo}
+                  subtitle={card.subtitle}
+                />
+              ))}
             </ScrollView>
+            <Subtitle> Content </Subtitle>
+            {contents.map((content, index) => (
+              <ContentCard
+                key={index}
+                image={content.image}
+                title={content.title}
+                subtitle={content.subtitle}
+                logo={content.logo}
+                author={content.author}
+                avatar={content.avatar}
+                caption={content.caption}
+              />
+            ))}
           </ScrollView>
         </SafeAreaView>
       </Container>
@@ -97,3 +94,41 @@ const Container = styled.View`
   background: #f0f3f5;
   flex: 1;
 `;
+
+const cards = [
+  {
+    image: require("./assets/card_background.jpg"),
+    title: "Styled Components",
+    caption: "React Native",
+    logo: require("./assets/logo-react.png"),
+    subtitle: "Sections"
+  },
+  {
+    image: require("./assets/card_background.jpg"),
+    title: "Styled Components 2",
+    caption: "React Native 2",
+    logo: require("./assets/logo-react.png"),
+    subtitle: "Sections 2"
+  }
+];
+
+const contents = [
+  {
+    title: "This is a Content 1",
+    subtitle: "Content subtitle 1",
+    image: require("./assets/card_background.jpg"),
+    logo: require("./assets/logo-react.png"),
+    author: "Author",
+    avatar: require("./assets/avatar-default.jpg"),
+    caption: "This is a long line Content caption 1"
+  },
+  {
+    title: "This is a a long line Content 2",
+    subtitle: "Content subtitle 2",
+    image: require("./assets/card_background.jpg"),
+    logo: require("./assets/logo-react.png"),
+    author: "Author 2",
+    avatar: require("./assets/avatar-default.jpg"),
+    caption: "Content caption 2"
+  }
+];
