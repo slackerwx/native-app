@@ -29,7 +29,7 @@ function mapDispatchToProps(dispatch) {
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    header: null
+    headerShown: false
   };
 
   state = {
@@ -177,7 +177,8 @@ const Subtitle = styled.Text`
 const Container = styled.View`
   background: #f0f3f5;
   flex: 1;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 `;
 
 const AnimatedContainer = Animated.createAnimatedComponent(Container);
