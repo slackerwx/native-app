@@ -12,9 +12,10 @@ import {
 import Menu from "../components/Menu";
 import { connect } from "react-redux";
 import { TouchableOpacity } from "react-native";
+import Avatar from "../components/Avatar";
 
 function mapStateToProps(state) {
-  return { action: state.action };
+  return { action: state.action, name: state.name };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -86,10 +87,10 @@ class HomeScreen extends React.Component {
                   onPress={this.props.openMenu}
                   style={{ position: "absolute", top: 0, left: 20 }}
                 >
-                  <Avatar source={require("../assets/avatar-default.jpg")} />
+                  <Avatar />
                 </TouchableOpacity>
                 <Title>Welcome Back,</Title>
-                <Name>User</Name>
+                <Name>{this.props.name}</Name>
               </TitleBar>
               <Subtitle>Styled subtitle</Subtitle>
               <ScrollView
@@ -140,13 +141,6 @@ const TitleBar = styled.View`
   width: 100%;
   margin-top: 50px;
   padding-left: 80px;
-`;
-
-const Avatar = styled.Image`
-  width: 44px;
-  height: 44px;
-  background: black;
-  border-radius: 22px;
 `;
 
 const Title = styled.Text`
