@@ -7,7 +7,8 @@ import {
   SafeAreaView,
   Animated,
   Easing,
-  StatusBar
+  StatusBar,
+  Platform
 } from "react-native";
 import Menu from "../components/Menu";
 import { connect } from "react-redux";
@@ -43,6 +44,8 @@ class HomeScreen extends React.Component {
 
   componentDidMount() {
     StatusBar.setBarStyle("dark-content", true);
+
+    if (Platform.OS == "android") StatusBar.setBarStyle("light-content".true);
   }
 
   toggleMenu = () => {
@@ -96,7 +99,7 @@ class HomeScreen extends React.Component {
                 <Title>Welcome Back,</Title>
                 <Name>{this.props.name}</Name>
               </TitleBar>
-              <Subtitle>Styled subtitle</Subtitle>
+              <Subtitle>{"Styled subtitle".toUpperCase()}</Subtitle>
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
@@ -116,24 +119,26 @@ class HomeScreen extends React.Component {
                       title={card.title}
                       caption={card.caption}
                       logo={card.logo}
-                      subtitle={card.subtitle}
+                      subtitle={card.subtitle.toUpperCase()}
                     />
                   </TouchableOpacity>
                 ))}
               </ScrollView>
-              <Subtitle> Content </Subtitle>
-              {contents.map((content, index) => (
-                <ContentCard
-                  key={index}
-                  image={content.image}
-                  title={content.title}
-                  subtitle={content.subtitle}
-                  logo={content.logo}
-                  author={content.author}
-                  avatar={content.avatar}
-                  caption={content.caption}
-                />
-              ))}
+              <Subtitle> {"Content".toUpperCase()} </Subtitle>
+              <ContentCardContainer>
+                {contents.map((content, index) => (
+                  <ContentCard
+                    key={index}
+                    image={content.image}
+                    title={content.title}
+                    subtitle={content.subtitle}
+                    logo={content.logo}
+                    author={content.author}
+                    avatar={content.avatar}
+                    caption={content.caption}
+                  />
+                ))}
+              </ContentCardContainer>
             </ScrollView>
           </SafeAreaView>
         </AnimatedContainer>
@@ -144,6 +149,11 @@ class HomeScreen extends React.Component {
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
 
+const ContentCardContainer = styled.View`
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-left: 10px;
+`;
 const RootView = styled.View`
   background: black;
   flex: 1;
@@ -199,6 +209,13 @@ const cards = [
     caption: "React Native 2",
     logo: require("../assets/logo-react.png"),
     subtitle: "Sections 2"
+  },
+  {
+    image: require("../assets/card_background.jpg"),
+    title: "Styled Components 3",
+    caption: "React Native 3",
+    logo: require("../assets/logo-react.png"),
+    subtitle: "Sections 3"
   }
 ];
 
@@ -220,5 +237,14 @@ const contents = [
     author: "Author 2",
     avatar: require("../assets/avatar-default.jpg"),
     caption: "Content caption 2"
+  },
+  {
+    title: "This is a a long line Content 3",
+    subtitle: "Content subtitle 3",
+    image: require("../assets/card_background.jpg"),
+    logo: require("../assets/logo-react.png"),
+    author: "Author 3",
+    avatar: require("../assets/avatar-default.jpg"),
+    caption: "Content caption 3"
   }
 ];
