@@ -8,7 +8,12 @@ import {
 } from "react-native";
 import { BlurView } from "expo-blur";
 class ModalLogin extends React.Component {
-  state = { email: "", password: "" };
+  state = {
+    email: "",
+    password: "",
+    iconEmail: require("../assets/icon-email.png"),
+    iconPassword: require("../assets/icon-password.png")
+  };
 
   handleLogin = () => {
     console.log(this.state.email, this.state.password);
@@ -16,6 +21,20 @@ class ModalLogin extends React.Component {
 
   tapBackground = () => {
     Keyboard.dismiss();
+  };
+
+  focusEmail = () => {
+    this.setState({
+      iconEmail: require("../assets/icon-email-animated.gif"),
+      iconPassword: require("../assets/icon-password.png")
+    });
+  };
+
+  focusPassword = () => {
+    this.setState({
+      iconEmail: require("../assets/icon-email.png"),
+      iconPassword: require("../assets/icon-password-animated.gif")
+    });
   };
 
   render() {
@@ -37,15 +56,17 @@ class ModalLogin extends React.Component {
             placeholder="Email"
             value={this.state.email}
             keyboardType="email-address"
+            onFocus={this.focusEmail}
           />
-          <IconEmail source={require("../assets/icon-email.png")} />
+          <IconEmail source={this.state.iconEmail} />
           <TextInput
             onChangeText={password => this.setState({ password })}
             placeholder="Password"
             value={this.state.password}
             secureTextEntry={true}
+            onFocus={this.focusPassword}
           />
-          <IconPassword source={require("../assets/icon-password.png")} />
+          <IconPassword source={this.state.iconPassword} />
           <TouchableOpacity onPress={this.handleLogin}>
             <ButtonView>
               <ButtonText>Log In</ButtonText>
