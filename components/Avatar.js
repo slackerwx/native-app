@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import normalize from "react-native-normalize";
 
 function mapStateToProps(state) {
   return {
@@ -43,7 +44,7 @@ class Avatar extends React.Component {
 export default connect(mapStateToProps, mapDispatchToProps)(Avatar);
 
 const Image = styled.Image`
-  width: 44px;
-  height: 44px;
-  border-radius: 22px;
+  width: ${normalize(44)};
+  height: ${normalize(44)};
+  border-radius: ${normalize(22)};
 `;

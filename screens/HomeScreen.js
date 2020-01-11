@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import { TouchableOpacity } from "react-native";
 import Avatar from "../components/Avatar";
 import ModalLogin from "../components/ModalLogin";
+import normalize from "react-native-normalize";
 
 function mapStateToProps(state) {
   return { action: state.action, name: state.name };
@@ -93,7 +94,7 @@ class HomeScreen extends React.Component {
               <TitleBar>
                 <TouchableOpacity
                   onPress={this.props.openMenu}
-                  style={{ position: "absolute", top: 0, left: 20 }}
+                  style={{ position: "absolute", top: 0, left: normalize(20) }}
                 >
                   <Avatar />
                 </TouchableOpacity>
@@ -104,7 +105,7 @@ class HomeScreen extends React.Component {
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
-                style={{ paddingBottom: 30 }}
+                style={{ paddingBottom: normalize(10) }}
               >
                 {cards.map((card, index) => (
                   <TouchableOpacity
@@ -143,7 +144,7 @@ class HomeScreen extends React.Component {
             </ScrollView>
           </SafeAreaView>
         </AnimatedContainer>
-        <ModalLogin />
+        {/* <ModalLogin /> */}
       </RootView>
     );
   }
@@ -154,8 +155,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
 const ContentCardContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
-  padding-left: 10px;
+  padding-left: ${normalize(10)};
+  margin-top: ${normalize(10)};
 `;
+
 const RootView = styled.View`
   background: black;
   flex: 1;
@@ -163,18 +166,18 @@ const RootView = styled.View`
 
 const TitleBar = styled.View`
   width: 100%;
-  margin-top: 50px;
-  padding-left: 80px;
+  margin-top: ${normalize(50)};
+  padding-left: ${normalize(80)};
 `;
 
 const Title = styled.Text`
-  font-size: 16px;
+  font-size: ${normalize(16)};
   color: #b8bece;
   font-weight: 500;
 `;
 
 const Name = styled.Text`
-  font-size: 20px;
+  font-size: ${normalize(20)};
   color: #3c4560;
   font-weight: bold;
 `;
@@ -182,17 +185,17 @@ const Name = styled.Text`
 const Subtitle = styled.Text`
   color: #b8bece;
   font-weight: 600;
-  font-size: 15px;
-  margin-left: 20px;
-  margin-top: 50px;
+  font-size: ${normalize(15)};
+  margin-left: ${normalize(20)};
+  margin-top: ${normalize(40)};
   text-transform: uppercase;
 `;
 
 const Container = styled.View`
   background: #f0f3f5;
   flex: 1;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: ${normalize(10)};
+  border-top-right-radius: ${normalize(10)};
 `;
 
 const AnimatedContainer = Animated.createAnimatedComponent(Container);

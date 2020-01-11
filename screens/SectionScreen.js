@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity, StatusBar } from "react-native";
+import normalize from "react-native-normalize";
 
 class SectionScreen extends React.Component {
   static navigationOptions = {
@@ -39,15 +40,15 @@ class SectionScreen extends React.Component {
           }}
           style={{
             position: "absolute",
-            top: 20,
-            right: 20
+            top: normalize(20),
+            right: normalize(20)
           }}
         >
           <CloseView>
             <Ionicons
               name="ios-close"
-              size={36}
-              style={{ marginTop: -2 }}
+              size={normalize(36)}
+              style={{ marginTop: normalize(-2) }}
               color="#4775f2"
             />
           </CloseView>
@@ -64,7 +65,7 @@ const Container = styled.View`
 `;
 
 const Cover = styled.View`
-  height: 375px;
+  height: ${normalize(375)};
 `;
 
 const Image = styled.Image`
@@ -78,48 +79,48 @@ const Image = styled.Image`
 const Wrapper = styled.View`
   flex-direction: row;
   position: absolute;
-  top: 40px;
-  left: 20px;
+  top: ${normalize(40)};
+  left: ${normalize(20)};
   align-items: center;
 `;
 
 const Logo = styled.Image`
-  width: 24px;
-  height: 24px;
+  width: ${normalize(24)};
+  height: ${normalize(24)};
 `;
 
 const Subtitle = styled.Text`
-  font-size: 15px;
+  font-size: ${normalize(15)};
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
-  margin-left: 5px;
+  margin-left: ${normalize(5)};
   text-transform: uppercase;
 `;
 
 const Title = styled.Text`
-  font-size: 24px;
+  font-size: ${normalize(24)};
   color: white;
   font-weight: bold;
-  width: 170px;
+  width: ${normalize(170)};
   position: absolute;
-  top: 78px;
-  left: 20px;
+  top: ${normalize(78)};
+  left: ${normalize(20)};
 `;
 
 const Caption = styled.Text`
   color: white;
-  font-size: 17px;
+  font-size: ${normalize(17)};
   position: absolute;
-  bottom: 20px;
-  left: 20px;
-  max-width: 300px;
+  bottom: ${normalize(20)};
+  left: ${normalize(20)};
+  max-width: ${normalize(300)};
 `;
 
 const CloseView = styled.View`
-  width: 32px;
-  height: 32px;
+  width: ${normalize(32)};
+  height: ${normalize(32)};
   background: white;
-  border-radius: 22px;
+  border-radius: ${normalize(22)};
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
   justify-content: center;
   align-items: center;

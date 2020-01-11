@@ -4,7 +4,7 @@ import { Animated, TouchableOpacity, Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import MenuItem from "./MenuItem";
 import { connect } from "react-redux";
-
+import normalize from "react-native-normalize";
 const screenWidth = Dimensions.get("window").width;
 var cardWidth = screenWidth;
 if (screenWidth > 500) {
@@ -67,14 +67,14 @@ class Menu extends React.Component {
           onPress={this.props.closeMenu}
           style={{
             position: "absolute",
-            top: 120,
+            top: normalize(120),
             left: "50%",
-            marginLeft: -22,
+            marginLeft: normalize(-22),
             zIndex: 1
           }}
         >
           <CloseView>
-            <Ionicons name="ios-close" size={44} color="#546bfb" />
+            <Ionicons name="ios-close" size={normalize(44)} color="#546bfb" />
           </CloseView>
         </TouchableOpacity>
         <Content>
@@ -101,14 +101,14 @@ const Container = styled.View`
   align-self: center;
   height: 100%;
   z-index: 100;
-  border-radius: 10px;
+  border-radius: ${normalize(10)};
   overflow: hidden;
 `;
 
 const AnimatedContainer = Animated.createAnimatedComponent(Container);
 
 const Cover = styled.View`
-  height: 142px;
+  height: ${normalize(142)};
   background: black;
   align-items: center;
   justify-content: center;
@@ -121,21 +121,21 @@ const Image = styled.Image`
 `;
 
 const Title = styled.Text`
-  font-size: 24px;
+  font-size: ${normalize(24)};
   color: white;
   font-weight: 600;
 `;
 
 const Subtitle = styled.Text`
-  font-size: 14px;
+  font-size: ${normalize(14)};
   color: rgba(255, 255, 255, 0.5);
-  margin-top: 8px;
+  margin-top: ${normalize(8)};
 `;
 
 const CloseView = styled.View`
-  width: 44px;
-  height: 44px;
-  border-radius: 22px;
+  width: ${normalize(44)};
+  height: ${normalize(44)};
+  border-radius: ${normalize(22)};
   background: white;
   justify-content: center;
   align-items: center;
@@ -145,7 +145,7 @@ const CloseView = styled.View`
 const Content = styled.View`
   height: ${screenHeight};
   background: #f0f3f5;
-  padding: 50px;
+  padding: ${normalize(50)}px;
 `;
 
 const items = [

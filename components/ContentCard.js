@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 import { Dimensions } from "react-native";
+import normalize from "react-native-normalize";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -55,19 +56,19 @@ class ContentCard extends React.Component {
 export default ContentCard;
 
 const Container = styled.View`
-  width: 335px;
-  height: 335px;
+  width: ${normalize(335)};
+  height: ${normalize(335)};
   background: white;
-  border-radius: 14px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  margin: 10px 10px;
+  border-radius: ${normalize(14)};
+  box-shadow: 0 ${normalize(10)}px ${normalize(20)}px rgba(0, 0, 0, 0.15);
+  margin: ${normalize(10)}px ${normalize(10)}px;
 `;
 
 const Cover = styled.View`
-  height: 260px;
+  height: ${normalize(260)};
   overflow: hidden;
-  border-top-right-radius: 14px;
-  border-top-left-radius: 14px;
+  border-top-right-radius: ${normalize(14)};
+  border-top-left-radius: ${normalize(14)};
   justify-content: flex-end;
 `;
 
@@ -78,57 +79,57 @@ const Image = styled.Image`
 `;
 
 const Logo = styled.Image`
-  width: 48px;
-  height: 48px;
+  width: ${normalize(48)};
+  height: ${normalize(48)};
   position: absolute;
-  top: 90px;
+  top: ${normalize(90)};
   left: 50%;
-  margin-left: -24px;
+  margin-left: ${normalize(-24)};
 `;
 
 const Content = styled.View`
-  padding-left: 62px;
+  padding-left: ${normalize(62)};
   justify-content: center;
-  height: 75px;
+  height: ${normalize(75)};
 `;
 
 const Avatar = styled.Image`
-  width: 32px;
-  height: 32px;
+  width: ${normalize(32)};
+  height: ${normalize(32)};
   position: absolute;
-  top: 20px;
-  left: 20px;
-  border-radius: 16px;
+  top: ${normalize(20)};
+  left: ${normalize(20)};
+  border-radius: ${normalize(16)};
 `;
 
 const Caption = styled.Text`
-  font-size: 14px;
+  font-size: ${normalize(14)};
   color: #3c4560;
   font-weight: 500;
-  max-width: 260px;
+  max-width: ${normalize(260)};
 `;
 
 const Author = styled.Text`
-  font-size: 13px;
+  font-size: ${normalize(13)};
   color: #b8bece;
   font-weight: 500;
-  margin-top: 4px;
+  margin-top: ${normalize(4)};
 `;
 
 const Title = styled.Text`
   color: white;
-  font-size: 24px;
+  font-size: ${normalize(24)};
   font-weight: 600;
-  margin-top: 4px;
-  width: 170px;
-  margin-bottom: 20px;
-  margin-left: 20px;
+  margin-top: ${normalize(4)};
+  width: ${normalize(170)};
+  margin-bottom: ${normalize(20)};
+  margin-left: ${normalize(20)};
 `;
 
 const Subtitle = styled.Text`
-  font-size: 15px;
+  font-size: ${normalize(15)};
   text-transform: uppercase;
   font-weight: 500;
-  margin-left: 20px;
+  margin-left: ${normalize(20)};
   color: rgba(255, 255, 255, 0.8);
 `;

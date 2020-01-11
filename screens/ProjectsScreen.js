@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import normalize from "react-native-normalize";
 
 class Projectscreen extends React.Component {
   static navigationOptions = {
@@ -24,5 +25,5 @@ const Container = styled.View`
 `;
 
 const Text = styled.Text`
-  font-size: 24px;
+  font-size: ${normalize(24)};
 `;
