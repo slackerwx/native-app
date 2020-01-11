@@ -1,21 +1,56 @@
 import React from "react";
 import styled from "styled-components";
 import normalize from "react-native-normalize";
-
+import {
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+  Keyboard
+} from "react-native";
+import { BlurView } from "expo-blur";
 class ModalLogin extends React.Component {
+  state = { email: "", password: "" };
+
+  handleLogin = () => {
+    console.log(this.state.email, this.state.password);
+  };
+
+  tapBackground = () => {
+    Keyboard.dismiss();
+  };
+
   render() {
     return (
       <Container>
+        <TouchableWithoutFeedback onPress={this.tapBackground}>
+          <BlurView
+            tint="default"
+            intensity={100}
+            style={{ position: "absolute", width: "100%", height: "100%" }}
+          />
+        </TouchableWithoutFeedback>
+
         <Modal>
           <Logo source={require("../assets/logo-react.png")} />
           <Text>Login Screen</Text>
-          <TextInput placeholder="Email" keyboardType="email-address" />
+          <TextInput
+            onChangeText={email => this.setState({ email })}
+            placeholder="Email"
+            value={this.state.email}
+            keyboardType="email-address"
+          />
           <IconEmail source={require("../assets/icon-email.png")} />
-          <TextInput placeholder="Password" secureTextEntry={true} />
+          <TextInput
+            onChangeText={password => this.setState({ password })}
+            placeholder="Password"
+            value={this.state.password}
+            secureTextEntry={true}
+          />
           <IconPassword source={require("../assets/icon-password.png")} />
-          <ButtonView>
-            <ButtonText>Log In</ButtonText>
-          </ButtonView>
+          <TouchableOpacity onPress={this.handleLogin}>
+            <ButtonView>
+              <ButtonText>Log In</ButtonText>
+            </ButtonView>
+          </TouchableOpacity>
         </Modal>
       </Container>
     );
