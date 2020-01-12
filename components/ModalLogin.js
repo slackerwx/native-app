@@ -9,6 +9,23 @@ import {
 import { BlurView } from "expo-blur";
 import Success from "./Success";
 import Loading from "./Loading";
+import { Dimensions, Animated } from "react-native";
+import { connect } from "react-redux";
+
+const screenHeight = Dimensions.get("window").height;
+
+function mapStateToProps(state) {
+  return { action: state.action };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    closeLogin: () =>
+      dispatch({
+        type: "CLOSE_LOGIN"
+      })
+  };
+}
 
 class ModalLogin extends React.Component {
   state = {
@@ -17,7 +34,8 @@ class ModalLogin extends React.Component {
     iconEmail: require("../assets/icon-email.png"),
     iconPassword: require("../assets/icon-password.png"),
     isSuccessful: false,
-    isLoading: false
+    isLoading: false,
+    top: new Animated.Value(screenHeight)
   };
 
   handleLogin = () => {
@@ -49,9 +67,24 @@ class ModalLogin extends React.Component {
     });
   };
 
+  componentDidUpdate() {
+    if (this.props.action == "openLogin") {
+      Animated.timing(this.state.top, {
+        toValue: 0,
+        duration: 0
+      }).start();
+    }
+
+    if (this.props.action == "closeLogin") {
+      Animated.timing(this.state.top, {
+        toValue: screenHeight,
+        duration: 0
+      }).start();
+    }
+  }
   render() {
     return (
-      <Container>
+      <AnimatedContainer style={{ top: this.state.top }}>
         <TouchableWithoutFeedback onPress={this.tapBackground}>
           <BlurView
             tint="default"
@@ -86,12 +119,12 @@ class ModalLogin extends React.Component {
         </Modal>
         <Success isActive={this.state.isSuccessful} />
         <Loading isActive={this.state.isLoading} />
-      </Container>
+      </AnimatedContainer>
     );
   }
 }
 
-export default ModalLogin;
+export default connect(mapStateToProps, mapDispatchToProps)(ModalLogin);
 
 const Container = styled.View`
   position: absolute;
@@ -103,6 +136,8 @@ const Container = styled.View`
   justify-content: center;
   align-items: center;
 `;
+
+const AnimatedContainer = Animated.createAnimatedComponent(Container);
 
 const Modal = styled.View`
   width: ${normalize(335)};
