@@ -35,7 +35,9 @@ class ModalLogin extends React.Component {
     iconPassword: require("../assets/icon-password.png"),
     isSuccessful: false,
     isLoading: false,
-    top: new Animated.Value(screenHeight)
+    top: new Animated.Value(screenHeight),
+    scale: new Animated.Value(1.3),
+    translateY: new Animated.Value(0)
   };
 
   handleLogin = () => {
@@ -51,6 +53,7 @@ class ModalLogin extends React.Component {
 
   tapBackground = () => {
     Keyboard.dismiss();
+    this.props.closeLogin();
   };
 
   focusEmail = () => {
@@ -73,12 +76,22 @@ class ModalLogin extends React.Component {
         toValue: 0,
         duration: 0
       }).start();
+      Animated.spring(this.state.scale, { toValue: 1 }).start();
+      Animated.timing(this.state.translateY, { toValue: 0, duration: 0 });
     }
 
     if (this.props.action == "closeLogin") {
-      Animated.timing(this.state.top, {
-        toValue: screenHeight,
-        duration: 0
+      setTimeout(() => {
+        Animated.timing(this.state.top, {
+          toValue: screenHeight,
+          duration: 0
+        }).start();
+        Animated.spring(this.state.scale, { toValue: 1.3 }).start();
+      }, 500);
+
+      Animated.timing(this.state.translateY, {
+        toValue: 1000,
+        duration: 500
       }).start();
     }
   }
@@ -92,7 +105,14 @@ class ModalLogin extends React.Component {
             style={{ position: "absolute", width: "100%", height: "100%" }}
           />
         </TouchableWithoutFeedback>
-        <Modal>
+        <AnimatedModal
+          style={{
+            transform: [
+              { scale: this.state.scale },
+              { translateY: this.state.translateY }
+            ]
+          }}
+        >
           <Logo source={require("../assets/logo-react.png")} />
           <Text>Login Screen</Text>
           <TextInput
@@ -116,7 +136,7 @@ class ModalLogin extends React.Component {
               <ButtonText>Log In</ButtonText>
             </ButtonView>
           </TouchableOpacity>
-        </Modal>
+        </AnimatedModal>
         <Success isActive={this.state.isSuccessful} />
         <Loading isActive={this.state.isLoading} />
       </AnimatedContainer>
@@ -147,6 +167,8 @@ const Modal = styled.View`
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   align-items: center;
 `;
+
+const AnimatedModal = Animated.createAnimatedComponent(Modal);
 
 const Logo = styled.Image`
   width: ${normalize(44)};
