@@ -144,7 +144,7 @@ class HomeScreen extends React.Component {
             </ScrollView>
           </SafeAreaView>
         </AnimatedContainer>
-        {/* <ModalLogin /> */}
+        <ModalLogin />
       </RootView>
     );
   }
