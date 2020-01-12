@@ -4,13 +4,15 @@ import normalize from "react-native-normalize";
 import {
   TouchableWithoutFeedback,
   TouchableOpacity,
-  Keyboard
+  Keyboard,
+  Alert
 } from "react-native";
 import { BlurView } from "expo-blur";
 import Success from "./Success";
 import Loading from "./Loading";
 import { Dimensions, Animated } from "react-native";
 import { connect } from "react-redux";
+import firebase from "./Firebase";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -45,10 +47,34 @@ class ModalLogin extends React.Component {
 
     this.setState({ isLoading: true });
 
-    setTimeout(() => {
-      this.setState({ isLoading: false });
-      this.setState({ isSuccessful: true });
-    }, 2000);
+    const email = this.state.email;
+    const password = this.state.password;
+
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch(function(error) {
+        Alert.alert("Error", error.message);
+      })
+      .then(response => {
+        this.setState({ isLoading: false });
+
+        if (response) {
+          this.setState({ isSuccessful: true });
+
+          Alert.alert("Congrats", "You've logged in successfuly!");
+
+          setTimeout(() => {
+            Keyboard.dismiss();
+            this.props.closeLogin();
+
+            this.setState({ isLoading: false });
+            this.setState({ isSuccessful: false });
+          }, 1000);
+
+          console.log(response.user);
+        }
+      });
   };
 
   tapBackground = () => {
