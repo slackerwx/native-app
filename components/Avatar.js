@@ -33,7 +33,7 @@ class Avatar extends React.Component {
           photo: response.photo
         });
 
-        this.props.updateName(response.name);
+        // this.props.updateName(response.name);
       });
   }
   render() {

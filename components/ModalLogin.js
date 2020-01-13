@@ -5,7 +5,8 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
   Keyboard,
-  Alert
+  Alert,
+  AsyncStorage
 } from "react-native";
 import { BlurView } from "expo-blur";
 import Success from "./Success";
@@ -25,6 +26,12 @@ function mapDispatchToProps(dispatch) {
     closeLogin: () =>
       dispatch({
         type: "CLOSE_LOGIN"
+      }),
+
+    updateName: name =>
+      dispatch({
+        type: "UPDATE_NAME",
+        name
       })
   };
 }
@@ -42,9 +49,22 @@ class ModalLogin extends React.Component {
     translateY: new Animated.Value(0)
   };
 
-  handleLogin = () => {
-    console.log(this.state.email, this.state.password);
+  storeName = async name => {
+    try {
+      await AsyncStorage.setItem("name", name);
+    } catch (error) {}
+  };
 
+  retrieveName = async () => {
+    try {
+      const name = await AsyncStorage.getItem("name");
+      if (name !== null) {
+        this.props.updateName(name);
+      }
+    } catch (error) {}
+  };
+
+  handleLogin = () => {
     this.setState({ isLoading: true });
 
     const email = this.state.email;
@@ -64,15 +84,13 @@ class ModalLogin extends React.Component {
 
           Alert.alert("Congrats", "You've logged in successfuly!");
 
-          setTimeout(() => {
-            Keyboard.dismiss();
-            this.props.closeLogin();
+          this.storeName(response.user.email);
+          this.props.updateName(response.user.email);
 
-            this.setState({ isLoading: false });
+          setTimeout(() => {
+            this.props.closeLogin();
             this.setState({ isSuccessful: false });
           }, 1000);
-
-          console.log(response.user);
         }
       });
   };
@@ -103,7 +121,10 @@ class ModalLogin extends React.Component {
         duration: 0
       }).start();
       Animated.spring(this.state.scale, { toValue: 1 }).start();
-      Animated.timing(this.state.translateY, { toValue: 0, duration: 0 });
+      Animated.timing(this.state.translateY, {
+        toValue: 0,
+        duration: 0
+      }).start();
     }
 
     if (this.props.action == "closeLogin") {
@@ -121,6 +142,11 @@ class ModalLogin extends React.Component {
       }).start();
     }
   }
+
+  componentDidMount() {
+    this.retrieveName();
+  }
+
   render() {
     return (
       <AnimatedContainer style={{ top: this.state.top }}>

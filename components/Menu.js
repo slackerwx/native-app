@@ -1,6 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { Animated, TouchableOpacity, Dimensions } from "react-native";
+import {
+  Animated,
+  TouchableOpacity,
+  Dimensions,
+  AsyncStorage
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import MenuItem from "./MenuItem";
 import { connect } from "react-redux";
@@ -20,7 +25,13 @@ function mapDispatchToProps(dispatch) {
     closeMenu: () =>
       dispatch({
         type: "CLOSE_MENU"
-      })
+      }),
+    updateName: name => {
+      dispatch({
+        type: "UPDATE_NAME",
+        name
+      });
+    }
   };
 }
 
@@ -55,6 +66,13 @@ class Menu extends React.Component {
     }
   };
 
+  handleMenu = index => {
+    if (index === 3) {
+      this.props.closeMenu();
+      AsyncStorage.clear();
+      this.props.updateName();
+    }
+  };
   render() {
     return (
       <AnimatedContainer style={{ top: this.state.top }}>
@@ -77,14 +95,22 @@ class Menu extends React.Component {
             <Ionicons name="ios-close" size={normalize(44)} color="#546bfb" />
           </CloseView>
         </TouchableOpacity>
+
         <Content>
           {items.map((item, index) => (
-            <MenuItem
+            <TouchableOpacity
               key={index}
-              icon={item.icon}
-              title={item.title}
-              text={item.text}
-            />
+              onPress={() => {
+                this.handleMenu(index);
+              }}
+            >
+              <MenuItem
+                key={index}
+                icon={item.icon}
+                title={item.title}
+                text={item.text}
+              />
+            </TouchableOpacity>
           ))}
         </Content>
       </AnimatedContainer>
