@@ -14,6 +14,7 @@ import Loading from "./Loading";
 import { Dimensions, Animated } from "react-native";
 import { connect } from "react-redux";
 import firebase from "./Firebase";
+import { saveState } from "./AsyncStorage";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -32,6 +33,12 @@ function mapDispatchToProps(dispatch) {
       dispatch({
         type: "UPDATE_NAME",
         name
+      }),
+
+    updateAvatar: avatar =>
+      dispatch({
+        type: "UPDATE_AVATAR",
+        avatar
       })
   };
 }
@@ -47,6 +54,20 @@ class ModalLogin extends React.Component {
     top: new Animated.Value(screenHeight),
     scale: new Animated.Value(1.3),
     translateY: new Animated.Value(0)
+  };
+
+  fetchUser = () => {
+    fetch("https://uinames.com/api/?ext&gender=male&region=Brazil")
+      .then(response => response.json())
+      .then(response => {
+        const name = response.name;
+        const avatar = response.photo;
+
+        saveState({ name, avatar });
+
+        this.props.updateName(name);
+        this.props.updateAvatar(avatar);
+      });
   };
 
   storeName = async name => {
@@ -84,7 +105,8 @@ class ModalLogin extends React.Component {
 
           Alert.alert("Congrats", "You've logged in successfuly!");
 
-          this.storeName(response.user.email);
+          // this.storeName(response.user.email);
+          this.fetchUser();
           this.props.updateName(response.user.email);
 
           setTimeout(() => {

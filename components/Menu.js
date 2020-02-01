@@ -26,12 +26,18 @@ function mapDispatchToProps(dispatch) {
       dispatch({
         type: "CLOSE_MENU"
       }),
-    updateName: name => {
+
+    updateName: name =>
       dispatch({
         type: "UPDATE_NAME",
         name
-      });
-    }
+      }),
+
+    updateAvatar: avatar =>
+      dispatch({
+        type: "UPDATE_AVATAR",
+        avatar
+      })
   };
 }
 
@@ -69,8 +75,11 @@ class Menu extends React.Component {
   handleMenu = index => {
     if (index === 3) {
       this.props.closeMenu();
+      this.props.updateName("Stranger");
+      this.props.updateAvatar(
+        "https://p68.tr3.n0.cdn.getcloudapp.com/items/2NurlGwQ/avatar-default.jpg?v=4aadcdbdffe209bbd523530a75351afd"
+      );
       AsyncStorage.clear();
-      this.props.updateName();
     }
   };
   render() {
